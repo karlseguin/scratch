@@ -54,26 +54,34 @@ func newInts(pool *IntsPool, size int) *Ints {
 	}
 }
 
-func (i *Ints) Add(value int) {
+// Returns false if there's no more room
+// The last successfully added item returns false
+// (as well all additions thereafter)
+func (i *Ints) Add(value int) bool {
 	if i.length == len(i.values) {
-		return
+		return false
 	}
 	i.values[i.length] = value
 	i.length++
+	return i.length < len(i.values)
 }
 
+// Get the values
 func (i *Ints) Values() []int {
 	return i.values[:i.length]
 }
 
+// Get the values
 func (i *Ints) Ids() []int {
 	return i.Values()
 }
 
+// The number of values
 func (i *Ints) Len() int {
 	return i.length
 }
 
+// Release the item back to the pool
 func (i *Ints) Release() {
 	if i.pool != nil {
 		i.length = 0

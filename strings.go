@@ -54,22 +54,29 @@ func newStrings(pool *StringsPool, size int) *Strings {
 	}
 }
 
-func (i *Strings) Add(value string) {
+// Returns false if there's no more room
+// The last successfully added item returns false
+// (as well all additions thereafter)
+func (i *Strings) Add(value string) bool {
 	if i.length == len(i.values) {
-		return
+		return false
 	}
 	i.values[i.length] = value
 	i.length++
+	return i.length < len(i.values)
 }
 
+// Get the values
 func (i *Strings) Values() []string {
 	return i.values[:i.length]
 }
 
+// The number of values
 func (i *Strings) Len() int {
 	return i.length
 }
 
+// The number of vlaues
 func (i *Strings) Release() {
 	if i.pool != nil {
 		i.length = 0

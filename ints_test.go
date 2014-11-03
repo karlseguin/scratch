@@ -60,9 +60,9 @@ func (i IntsTests) AddsValues() {
 
 func (i IntsTests) SilentlyDropsOverflow() {
 	ints := newInts(nil, 2)
-	ints.Add(2)
-	ints.Add(9)
-	ints.Add(-1)
+	Expect(ints.Add(2)).To.Equal(true)
+	Expect(ints.Add(9)).To.Equal(false)
+	Expect(ints.Add(-1)).To.Equal(false)
 	Expect(ints.Len()).To.Equal(2)
 	Expect(ints.Values()).To.Equal([]int{2, 9})
 }

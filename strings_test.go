@@ -60,9 +60,9 @@ func (i StringsTests) AddsValues() {
 
 func (i StringsTests) SilentlyDropsOverflow() {
 	strings := newStrings(nil, 2)
-	strings.Add("zd")
-	strings.Add("4q")
-	strings.Add("5541")
+	Expect(strings.Add("zd")).To.Equal(true)
+	Expect(strings.Add("4q")).To.Equal(false)
+	Expect(strings.Add("5541")).To.Equal(false)
 	Expect(strings.Len()).To.Equal(2)
 	Expect(strings.Values()).To.Equal([]string{"zd", "4q"})
 }
