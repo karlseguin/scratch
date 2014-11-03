@@ -1,9 +1,9 @@
 package scratch
 
 import (
-	"testing"
-	"reflect"
 	. "github.com/karlseguin/expect"
+	"reflect"
+	"testing"
 )
 
 type IntsTests struct{}

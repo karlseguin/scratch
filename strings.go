@@ -43,13 +43,13 @@ func (p *StringsPool) Checkout() *Strings {
 
 type Strings struct {
 	length int
-	pool *StringsPool
+	pool   *StringsPool
 	values []string
 }
 
 func newStrings(pool *StringsPool, size int) *Strings {
 	return &Strings{
-		pool: pool,
+		pool:   pool,
 		values: make([]string, size),
 	}
 }

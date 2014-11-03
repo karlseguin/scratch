@@ -43,13 +43,13 @@ func (p *IntsPool) Checkout() *Ints {
 
 type Ints struct {
 	length int
-	pool *IntsPool
+	pool   *IntsPool
 	values []int
 }
 
 func newInts(pool *IntsPool, size int) *Ints {
 	return &Ints{
-		pool: pool,
+		pool:   pool,
 		values: make([]int, size),
 	}
 }
@@ -64,6 +64,10 @@ func (i *Ints) Add(value int) {
 
 func (i *Ints) Values() []int {
 	return i.values[:i.length]
+}
+
+func (i *Ints) Ids() []int {
+	return i.Values()
 }
 
 func (i *Ints) Len() int {
