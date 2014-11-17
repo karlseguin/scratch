@@ -1,11 +1,11 @@
 # Scratch
-Pools for []int and []string.
+Pools for []int, []string and []interface{}
 
 You can use them for anything, but I tend to need these most frequently for
 scratch work (short-lived work).
 
 ## Usage
-Both the `StringsPool` and `IntsPool` have the same interface (except the first deals with strings and the later ints).
+Aside from the types they deal with, the `StringsPool`, `IntsPool` and `AnytingPool` have the same interface.
 
 First, create the pool by specifying the size of each underlying array and the number of items to keep in the pool:
 
@@ -14,6 +14,8 @@ First, create the pool by specifying the size of each underlying array and the n
 strPool := scratch.NewStrings(20, 128)
 // OR
 intPool := scratch.NewInts(20, 128)
+// OR
+ne = scratch.NewAnything(20, 128)
 ```
 
 The pools are thread-safe. You can `Checkout` an item, and then `Release` it:
