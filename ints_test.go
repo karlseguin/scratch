@@ -12,19 +12,19 @@ func Test_Ints(t *testing.T) {
 	Expectify(new(IntsTests), t)
 }
 
-func (i *IntsTests) ItemCapacity() {
+func (_ IntsTests) ItemCapacity() {
 	p := NewInts(9, 1)
 	ints := p.Checkout()
 	defer ints.Release()
 	Expect(cap(ints.Values())).To.Equal(9)
 }
 
-func (i *IntsTests) PoolCapacity() {
+func (_ IntsTests) PoolCapacity() {
 	p := NewInts(4, 3)
 	Expect(cap(p.pool)).To.Equal(3)
 }
 
-func (i *IntsTests) CreatesItemOnEmptyPool() {
+func (_ IntsTests) CreatesItemOnEmptyPool() {
 	p := NewInts(2, 1)
 	ints1 := p.Checkout()
 	ints2 := p.Checkout()
@@ -36,7 +36,7 @@ func (i *IntsTests) CreatesItemOnEmptyPool() {
 	Expect(p.Misses()).To.Equal(int64(1))
 }
 
-func (i *IntsTests) ReleasesBackToPool() {
+func (_ IntsTests) ReleasesBackToPool() {
 	p := NewInts(20, 1)
 	ints1 := p.Checkout()
 	pointer := reflect.ValueOf(ints1).Pointer()
@@ -49,7 +49,7 @@ func (i *IntsTests) ReleasesBackToPool() {
 	}
 }
 
-func (i IntsTests) AddsValues() {
+func (_ IntsTests) AddsValues() {
 	ints := newInts(nil, 3)
 	ints.Add(2)
 	ints.Add(9)
@@ -58,7 +58,7 @@ func (i IntsTests) AddsValues() {
 	Expect(ints.Values()).To.Equal([]int{2, 9, -1})
 }
 
-func (i IntsTests) SilentlyDropsOverflow() {
+func (_ IntsTests) SilentlyDropsOverflow() {
 	ints := newInts(nil, 2)
 	Expect(ints.Add(2)).To.Equal(true)
 	Expect(ints.Add(9)).To.Equal(false)
@@ -67,7 +67,7 @@ func (i IntsTests) SilentlyDropsOverflow() {
 	Expect(ints.Values()).To.Equal([]int{2, 9})
 }
 
-func (i IntsTests) ResetsOnRelease() {
+func (_ IntsTests) ResetsOnRelease() {
 	p := NewInts(20, 1)
 	ints := p.Checkout()
 	ints.Add(2)

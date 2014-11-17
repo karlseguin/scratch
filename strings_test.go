@@ -12,19 +12,19 @@ func Test_Strings(t *testing.T) {
 	Expectify(new(StringsTests), t)
 }
 
-func (i *StringsTests) ItemCapacity() {
+func (_ StringsTests) ItemCapacity() {
 	p := NewStrings(9, 1)
 	strings := p.Checkout()
 	defer strings.Release()
 	Expect(cap(strings.Values())).To.Equal(9)
 }
 
-func (i *StringsTests) PoolCapacity() {
+func (_ StringsTests) PoolCapacity() {
 	p := NewStrings(4, 3)
 	Expect(cap(p.pool)).To.Equal(3)
 }
 
-func (i *StringsTests) CreatesItemOnEmptyPool() {
+func (_ StringsTests) CreatesItemOnEmptyPool() {
 	p := NewStrings(2, 1)
 	strings1 := p.Checkout()
 	strings2 := p.Checkout()
@@ -36,7 +36,7 @@ func (i *StringsTests) CreatesItemOnEmptyPool() {
 	Expect(p.Misses()).To.Equal(int64(1))
 }
 
-func (i *StringsTests) ReleasesBackToPool() {
+func (_ StringsTests) ReleasesBackToPool() {
 	p := NewStrings(20, 1)
 	strings1 := p.Checkout()
 	pointer := reflect.ValueOf(strings1).Pointer()
@@ -49,7 +49,7 @@ func (i *StringsTests) ReleasesBackToPool() {
 	}
 }
 
-func (i StringsTests) AddsValues() {
+func (_ StringsTests) AddsValues() {
 	strings := newStrings(nil, 3)
 	strings.Add("b")
 	strings.Add("f")
@@ -58,7 +58,7 @@ func (i StringsTests) AddsValues() {
 	Expect(strings.Values()).To.Equal([]string{"b", "f", "aa"})
 }
 
-func (i StringsTests) SilentlyDropsOverflow() {
+func (_ StringsTests) SilentlyDropsOverflow() {
 	strings := newStrings(nil, 2)
 	Expect(strings.Add("zd")).To.Equal(true)
 	Expect(strings.Add("4q")).To.Equal(false)
@@ -67,7 +67,7 @@ func (i StringsTests) SilentlyDropsOverflow() {
 	Expect(strings.Values()).To.Equal([]string{"zd", "4q"})
 }
 
-func (i StringsTests) ResetsOnRelease() {
+func (_ StringsTests) ResetsOnRelease() {
 	p := NewStrings(20, 1)
 	strings := p.Checkout()
 	strings.Add("a")
