@@ -6,6 +6,8 @@ import (
 	"sync/atomic"
 )
 
+var EmptyStrings = newStrings(nil, 0)
+
 // Pool of []String
 type StringsPool struct {
 	misses int64
