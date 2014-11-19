@@ -75,3 +75,18 @@ func (_ StringsTests) ResetsOnRelease() {
 	strings.Release()
 	Expect(strings.Len()).To.Equal(0)
 }
+
+func (_ StringsTests) SimpleSplit() {
+	strings := newStrings(nil, 10)
+	Expect(strings.Split("over 9000!", " ")).To.Equal([]string{"over", "9000!"})
+}
+
+func (_ StringsTests) SimpleMultiSep() {
+	strings := newStrings(nil, 10)
+	Expect(strings.Split("the!!spice!must!!flow!!", "!!")).To.Equal([]string{"the", "spice!must", "flow", ""})
+}
+
+func (_ StringsTests) TrailingAndLeadingSplit() {
+	strings := newStrings(nil, 10)
+	Expect(strings.Split("/the/spice/must/flow/", "/")).To.Equal([]string{"", "the", "spice", "must", "flow", ""})
+}

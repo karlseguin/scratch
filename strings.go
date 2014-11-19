@@ -2,6 +2,7 @@
 package scratch
 
 import (
+	"strings"
 	"sync/atomic"
 )
 
@@ -57,29 +58,44 @@ func newStrings(pool *StringsPool, size int) *Strings {
 // Returns false if there's no more room
 // The last successfully added item returns false
 // (as well all additions thereafter)
-func (i *Strings) Add(value string) bool {
-	if i.length == len(i.values) {
+func (s *Strings) Add(value string) bool {
+	if s.length == len(s.values) {
 		return false
 	}
-	i.values[i.length] = value
-	i.length++
-	return i.length < len(i.values)
+	s.values[s.length] = value
+	s.length++
+	return s.length < len(s.values)
 }
 
 // Get the values
-func (i *Strings) Values() []string {
-	return i.values[:i.length]
+func (s *Strings) Values() []string {
+	return s.values[:s.length]
 }
 
 // The number of values
-func (i *Strings) Len() int {
-	return i.length
+func (s *Strings) Len() int {
+	return s.length
+}
+
+func (s *Strings) Split(input, sep string) []string {
+	l, position := len(sep), 0
+	for {
+		index := strings.Index(input[position:], sep)
+		if index == -1 {
+			s.Add(input[position:])
+			return s.Values()
+		}
+		if s.Add(input[position:position+index]) == false {
+			return s.Values()
+		}
+		position += index + l
+	}
 }
 
 // The number of vlaues
-func (i *Strings) Release() {
-	if i.pool != nil {
-		i.length = 0
-		i.pool.pool <- i
+func (s *Strings) Release() {
+	if s.pool != nil {
+		s.length = 0
+		s.pool.pool <- s
 	}
 }

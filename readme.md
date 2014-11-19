@@ -33,3 +33,7 @@ for _, value := range scratch.Values() {
 ```
 
 If you `Add` more values than the underlying array can hold, the item is simply dropped/ignored.
+
+## String.Split
+
+The strings object has a `Split(input, sep string) []string` method which behaves like the standard library's `strings.Split` function. Since the underlying pooled `[]string` is used, it performs slightly faster and allocates considerably less memory.
