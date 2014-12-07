@@ -83,6 +83,11 @@ func (i *Ints) Len() int {
 	return i.length
 }
 
+// Resets to 0 values without releasing back to the pool
+func (i *Ints) Reset() {
+	i.length = 0
+}
+
 // Release the item back to the pool
 func (i *Ints) Release() {
 	if i.pool != nil {

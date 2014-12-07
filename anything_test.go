@@ -75,3 +75,12 @@ func (_ AnythingTests) ResetsOnRelease() {
 	ne.Release()
 	Expect(ne.Len()).To.Equal(0)
 }
+
+func (_ AnythingTests) Resets() {
+	p := NewAnything(20, 1)
+	ne := p.Checkout()
+	ne.Add(2)
+	ne.Add(3)
+	ne.Reset()
+	Expect(ne.Len()).To.Equal(0)
+}

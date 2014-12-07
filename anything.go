@@ -71,9 +71,14 @@ func (a *Anything) Values() []interface{} {
 	return a.values[:a.length]
 }
 
-// The Anything of values
+// The length of values
 func (a *Anything) Len() int {
 	return a.length
+}
+
+// Resets to 0 values without releasing back to the pool
+func (a *Anything) Reset() {
+	a.length = 0
 }
 
 // Release the item back to the pool

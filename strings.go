@@ -94,6 +94,11 @@ func (s *Strings) Split(input, sep string) []string {
 	}
 }
 
+// Resets to 0 values without releasing back to the pool
+func (s *Strings) Reset() {
+	s.length = 0
+}
+
 // The number of vlaues
 func (s *Strings) Release() {
 	if s.pool != nil {

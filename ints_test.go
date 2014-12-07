@@ -75,3 +75,12 @@ func (_ IntsTests) ResetsOnRelease() {
 	ints.Release()
 	Expect(ints.Len()).To.Equal(0)
 }
+
+func (_ IntsTests) Resets() {
+	p := NewInts(20, 1)
+	ints := p.Checkout()
+	ints.Add(2)
+	ints.Add(3)
+	ints.Reset()
+	Expect(ints.Len()).To.Equal(0)
+}

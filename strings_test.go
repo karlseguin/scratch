@@ -76,6 +76,15 @@ func (_ StringsTests) ResetsOnRelease() {
 	Expect(strings.Len()).To.Equal(0)
 }
 
+func (_ StringsTests) Resets() {
+	p := NewStrings(20, 1)
+	strings := p.Checkout()
+	strings.Add("a")
+	strings.Add("b")
+	strings.Reset()
+	Expect(strings.Len()).To.Equal(0)
+}
+
 func (_ StringsTests) SimpleSplit() {
 	strings := newStrings(nil, 10)
 	Expect(strings.Split("over 9000!", " ")).To.Equal([]string{"over", "9000!"})
