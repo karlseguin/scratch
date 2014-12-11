@@ -28,7 +28,10 @@ func NewInts(size, count int) *IntsPool {
 }
 
 // The number of times we tried to checkout from an empty pool
-func (p *IntsPool) Misses() int64 {
+func (p *IntsPool) Misses(reset bool) int64 {
+	if reset {
+		return atomic.SwapInt64(&p.misses, 0)
+	}
 	return atomic.LoadInt64(&p.misses)
 }
 

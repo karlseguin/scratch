@@ -29,7 +29,10 @@ func NewStrings(size, count int) *StringsPool {
 }
 
 // The number of times we tried to checkout from an empty pool
-func (p *StringsPool) Misses() int64 {
+func (p *StringsPool) Misses(reset bool) int64 {
+	if reset {
+		return atomic.SwapInt64(&p.misses, 0)
+	}
 	return atomic.LoadInt64(&p.misses)
 }
 

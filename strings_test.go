@@ -33,7 +33,15 @@ func (_ StringsTests) CreatesItemOnEmptyPool() {
 	strings1.Release()
 	strings2.Release()
 	Expect(len(p.pool)).To.Equal(1)
-	Expect(p.Misses()).To.Equal(int64(1))
+}
+
+func (_ StringsTests) CalculatesMisses() {
+	p := NewStrings(2, 1)
+	p.Checkout()
+	p.Checkout()
+	Expect(p.Misses(false)).To.Equal(int64(1))
+	Expect(p.Misses(true)).To.Equal(int64(1))
+	Expect(p.Misses(false)).To.Equal(int64(0))
 }
 
 func (_ StringsTests) ReleasesBackToPool() {

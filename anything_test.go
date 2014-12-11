@@ -33,7 +33,15 @@ func (_ AnythingTests) CreatesItemOnEmptyPool() {
 	ne1.Release()
 	ne2.Release()
 	Expect(len(p.pool)).To.Equal(1)
-	Expect(p.Misses()).To.Equal(int64(1))
+}
+
+func (_ AnythingTests) CalculatesMisses() {
+	p := NewAnything(2, 1)
+	p.Checkout()
+	p.Checkout()
+	Expect(p.Misses(false)).To.Equal(int64(1))
+	Expect(p.Misses(true)).To.Equal(int64(1))
+	Expect(p.Misses(false)).To.Equal(int64(0))
 }
 
 func (_ AnythingTests) ReleasesBackToPool() {
